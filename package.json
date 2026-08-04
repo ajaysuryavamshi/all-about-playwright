@@ -3,7 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "example:headed": "npx playwright test tests/example.spec.ts --headed",
+    "example:chromium": "npx playwright test tests/example.spec.ts --project=chromium",
+    "example:ui": "npx playwright test tests/example.spec.ts --ui",
+    "katalon:headed": "npx playwright test tests/katalon/appointment.spec.ts --headed",
+    "katalon:chromium": "npx playwright test tests/katalon/appointment.spec.ts --project=chromium",
+    "katalon:ui": "npx playwright test tests/katalon/appointment.spec.ts --ui",
+    "katalon:debug": "npx playwright test tests/katalon/appointment.spec.ts --debug",
+    "katalon:trace": "npx playwright test tests/katalon/appointment.spec.ts --project=chromium --trace on",
+    "report": "npx playwright show-report"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

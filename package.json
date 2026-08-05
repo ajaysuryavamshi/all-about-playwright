@@ -13,7 +13,9 @@
     "katalon:debug": "npx playwright test tests/katalon/appointment.spec.ts --debug",
     "katalon:trace": "npx playwright test tests/katalon/appointment.spec.ts --project=chromium --trace on",
     "katalon:tag": "npx playwright test tests/katalon/appointment.spec.ts --grep @appointment",
-    "report": "npx playwright show-report"
+    "report": "npx playwright show-report",
+    "allure:report": "allure generate --clean -o allure-report",
+    "allure:open": "allure open allure-report"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,8 @@
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.62.1",
-    "@types/node": "^26.1.2"
+    "@types/node": "^26.1.2",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.10.2"
   }
 }

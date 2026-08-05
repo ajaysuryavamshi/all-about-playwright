@@ -1,0 +1,12 @@
+[
+  {
+    "username": "Invalid User",
+    "password": "Invalid Password",
+    "description": "should not be able to make an appointment with invalid credentials"
+  },
+  {
+    "username": "",
+    "password": "",
+    "description": "should not be able to make an appointment with empty credentials"
+  }
+]

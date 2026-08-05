@@ -1,4 +1,5 @@
 import { expect, test } from '../../src/fixtures/test-base';
+import appointmentData from '../../src/data/appointment-data.json';
 
 test.describe('Make an Appointment', {
     tag: ["@katalon", "@appointment"],
@@ -6,12 +7,12 @@ test.describe('Make an Appointment', {
 }, () => {
 
     test.beforeEach(async ({ page }) => {
-        await page.goto('https://katalon-demo-cura.herokuapp.com/');
+        await page.goto('/');
     });
 
     test('should be able to make an appointment', { tag: ["@appointment"] }, async ({ loginPage, appointmentPage, page }) => {
         await loginPage.navigateToAppointmentPage();
-        await loginPage.login('John Doe', 'ThisIsNotAPassword');
+        await loginPage.login(process.env.USERNAME!, process.env.PASSWORD!);
         await expect(page).toHaveURL(/.*appointment/);
 
         await appointmentPage.bookAppointment({
@@ -33,24 +34,19 @@ test.describe('Make an Appointment', {
         await appointmentPage.clickConfirmationHeading();
     });
 
-    test('should not be able to make an appointment with invalid credentials', { tag: ["@login"] }, async ({ loginPage, browserName }) => {
-        if (browserName === 'webkit') {
-            test.skip();
-        }
+    for (const data of appointmentData) {
+        test(data.description, { tag: ["@login"] }, async ({ loginPage, browserName }) => {
+            if (data.username === 'Invalid User' && browserName === 'webkit') {
+                test.skip();
+            }
+            if (data.username === '' && browserName === 'firefox') {
+                test.skip();
+            }
 
-        await loginPage.navigateToAppointmentPage();
-        await loginPage.login('Invalid User', 'Invalid Password');
-        await loginPage.expectErrorMessageVisible();
-    });
-
-    test('should not be able to make an appointment with empty credentials', { tag: ["@login"] }, async ({ loginPage, browserName }) => {
-        if (browserName === 'firefox') {
-            test.skip();
-        }
-
-        await loginPage.navigateToAppointmentPage();
-        await loginPage.login('', '');
-        await loginPage.expectErrorMessageVisible();
-    });
+            await loginPage.navigateToAppointmentPage();
+            await loginPage.login(data.username, data.password);
+            await loginPage.expectErrorMessageVisible();
+        });
+    }
 
 });

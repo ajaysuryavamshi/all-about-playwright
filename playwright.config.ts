@@ -1,12 +1,14 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+import path from 'path';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+const environment = process.env.ENV || 'dev';
+dotenv.config({ path: path.resolve(__dirname, `.env.${environment}`) });
+
+// Fallback to default .env if specific env file isn't found
+if (!process.env.BASE_URL) {
+  dotenv.config();
+}
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -15,35 +17,20 @@ export default defineConfig({
   globalSetup: require.resolve('./src/lifecycle/global-setup'),
   globalTeardown: require.resolve('./src/lifecycle/global-teardown'),
   testDir: './tests',
-  /* Run tests in files in parallel */
   fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html'],
     ['allure-playwright'],
   ],
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
-
-    // Capture screenshot after each test failure.
+    baseURL: process.env.BASE_URL,
     screenshot: 'on',
-
-    // Record video only when retrying a test for the first time.
     video: 'on',
-
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
-
     launchOptions: {
-      // Slow down the tests to see what is happening.
       slowMo: 1000,
     },
   },

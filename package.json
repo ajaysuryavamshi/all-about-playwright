@@ -12,6 +12,7 @@
     "katalon:ui": "npx playwright test tests/katalon/appointment.spec.ts --ui",
     "katalon:debug": "npx playwright test tests/katalon/appointment.spec.ts --debug",
     "katalon:trace": "npx playwright test tests/katalon/appointment.spec.ts --project=chromium --trace on",
+    "katalon:tag": "npx playwright test tests/katalon/appointment.spec.ts --grep @appointment",
     "report": "npx playwright show-report"
   },
   "keywords": [],

@@ -1,6 +1,11 @@
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
+test('has title', async ({ page, browser }) => {
+  test.info().annotations.push({
+    type: 'browser version',
+    description: browser.version(),
+  });
+
   await page.goto('https://playwright.dev/');
 
   // Expect a title "to contain" a substring.

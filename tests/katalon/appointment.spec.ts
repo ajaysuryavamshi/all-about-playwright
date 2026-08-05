@@ -1,12 +1,15 @@
 import { expect, test } from '@playwright/test';
 
-test.describe('Make an Appointment', () => {
+test.describe('Make an Appointment', {
+    tag: ["@katalon", "@appointment"],
+    annotation: { type: 'application', description: 'Katalon' },
+}, () => {
 
     test.beforeEach(async ({ page }) => {
         await page.goto('https://katalon-demo-cura.herokuapp.com/');
     });
 
-    test('should be able to make an appointment', async ({ page }) => {
+    test('should be able to make an appointment', { tag: ["@appointment"] }, async ({ page }) => {
         await page.getByRole('link', { name: 'Make Appointment' }).click();
         await page.getByLabel('Username').fill('John Doe');
         await page.getByLabel('Password').fill('ThisIsNotAPassword');
@@ -30,7 +33,11 @@ test.describe('Make an Appointment', () => {
         await page.getByRole('heading', { name: 'Appointment Confirmation' }).click();
     });
 
-    test('should not be able to make an appointment with invalid credentials', async ({ page }) => {
+    test('should not be able to make an appointment with invalid credentials', { tag: ["@login"] }, async ({ page, browserName }) => {
+        if (browserName === 'webkit') {
+            test.skip();
+        }
+
         await page.getByRole('link', { name: 'Make Appointment' }).click();
         await page.getByLabel('Username').fill('Invalid User');
         await page.getByLabel('Password').fill('Invalid Password');
@@ -38,7 +45,11 @@ test.describe('Make an Appointment', () => {
         await expect(page.getByText('Login failed! Please ensure the username and password are valid.')).toBeVisible();
     });
 
-    test('should not be able to make an appointment with empty credentials', async ({ page }) => {
+    test('should not be able to make an appointment with empty credentials', { tag: ["@login"] }, async ({ page, browserName }) => {
+        if (browserName === 'firefox') {
+            test.skip();
+        }
+
         await page.getByRole('link', { name: 'Make Appointment' }).click();
         await page.getByRole('button', { name: 'Login' }).click();
         await expect(page.getByText('Login failed! Please ensure the username and password are valid.')).toBeVisible();

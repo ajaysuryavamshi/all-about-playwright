@@ -28,8 +28,19 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('')`. */
     // baseURL: 'http://localhost:3000',
 
+    // Capture screenshot after each test failure.
+    screenshot: 'on',
+
+    // Record video only when retrying a test for the first time.
+    video: 'on',
+
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
+
+    launchOptions: {
+      // Slow down the tests to see what is happening.
+      slowMo: 1000,
+    },
   },
 
   /* Configure projects for major browsers */
@@ -50,10 +61,10 @@ export default defineConfig({
     },
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
+    {
+      name: 'Mobile Chrome',
+      use: { ...devices['Pixel 5'] },
+    },
     // {
     //   name: 'Mobile Safari',
     //   use: { ...devices['iPhone 12'] },

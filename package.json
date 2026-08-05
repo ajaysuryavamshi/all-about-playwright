@@ -15,7 +15,9 @@
     "katalon:tag": "npx playwright test tests/katalon/appointment.spec.ts --grep @appointment",
     "report": "npx playwright show-report",
     "allure:report": "allure generate --clean -o allure-report",
-    "allure:open": "allure open allure-report"
+    "allure:open": "allure open allure-report",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "keywords": [],
   "author": "",
@@ -24,8 +26,13 @@
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.1.2",
+    "@typescript-eslint/eslint-plugin": "^8.66.0",
+    "@typescript-eslint/parser": "^8.66.0",
     "allure-commandline": "^2.43.0",
     "allure-playwright": "^3.10.2",
-    "dotenv": "^17.4.2"
+    "dotenv": "^17.4.2",
+    "eslint": "^10.8.0",
+    "eslint-plugin-playwright": "^2.11.0",
+    "prettier": "^3.9.6"
   }
 }

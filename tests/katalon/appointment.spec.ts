@@ -1,5 +1,6 @@
 import { expect, test } from '../../src/fixtures/test-base';
 import appointmentData from '../../src/data/appointment-data.json';
+import { DateHelper } from '../../src/utils/date-helper';
 
 test.describe('Make an Appointment', {
     tag: ["@katalon", "@appointment"],
@@ -15,11 +16,14 @@ test.describe('Make an Appointment', {
         await loginPage.login(process.env.USERNAME!, process.env.PASSWORD!);
         await expect(page).toHaveURL(/.*appointment/);
 
+        const targetDay = 4;
+        const expectedDate = DateHelper.getFormattedDate(targetDay);
+
         await appointmentPage.bookAppointment({
             facility: 'Hongkong CURA Healthcare Center',
             readmission: true,
             program: 'Medicaid',
-            day: '4',
+            day: targetDay.toString(),
             comment: 'This is a simple comment'
         });
 
@@ -27,7 +31,7 @@ test.describe('Make an Appointment', {
             facility: 'Hongkong CURA Healthcare Center',
             readmission: 'Yes',
             program: 'Medicaid',
-            date: '04/08/2026',
+            date: expectedDate,
             comment: 'This is a simple comment'
         });
 

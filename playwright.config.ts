@@ -33,13 +33,36 @@ export default defineConfig({
     launchOptions: {
       slowMo: 1000,
     },
+
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        launchOptions: {
+          args: [
+            '--disable-web-security', 
+            '--disable-features=IsolateOrigins,site-per-process', 
+            '--disable-site-isolation-trials', 
+            '--disable-blink-features=AutomationControlled',  
+            '--disable-infobars', 
+            '--disable-extensions', 
+            '--disable-notifications', 
+            '--disable-popup-blocking', 
+            '--disable-translate', 
+            '--disable-background-timer-throttling', 
+            '--disable-renderer-backgrounding', 
+            '--disable-device-discovery-notifications',
+            '--start-maximized',
+            '--allow-no-sandbox-job',
+           ],
+        },
+
+       },
     },
 
     {
